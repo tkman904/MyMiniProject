@@ -25,4 +25,10 @@ public class HobbyServiceImpl implements HobbyService {
 		// TODO Auto-generated method stub
 		return mapper.hobbyTotalPage();
 	}
+
+	@Override
+	public List<HobbyVO> hobbyTop10Data() {
+		// TODO Auto-generated method stub
+		return mapper.hobbyTop10Data();
+	}
 }

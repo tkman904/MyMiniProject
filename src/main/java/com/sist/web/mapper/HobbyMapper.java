@@ -19,4 +19,13 @@ public interface HobbyMapper {
 	
 	@Select("SELECT CEIL(COUNT(*)/12.0) FROM board")
 	public int hobbyTotalPage();
+	
+	// Footer
+	@Select("SELECT b_id, b_title, ROWNUM "
+			+ "FROM (SELECT b_id, b_title "
+			+ "FROM board "
+			+ "WHERE b_type = '취미/자기개발' "
+			+ "ORDER BY b_view_count DESC) "
+			+ "WHERE ROWNUM<=10")
+	public List<HobbyVO> hobbyTop10Data();
 }

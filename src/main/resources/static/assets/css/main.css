@@ -2228,6 +2228,21 @@ input, select, textarea {
 		#footer h2 {
 			text-align: center;
 		}
+		
+		#footer li {
+			list-style-type: none;
+			padding-left: 0;
+		}
+		
+		#footer li a {
+		  display: block;         
+		  max-width: 100%;        
+		  white-space: nowrap;    
+		  overflow: hidden;       
+		  text-overflow: ellipsis; 
+		  color: gray;
+		}
+
 
 /* Copyright */
 

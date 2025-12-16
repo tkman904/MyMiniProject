@@ -7,4 +7,5 @@ import com.sist.web.vo.HobbyVO;
 public interface HobbyService {
 	public List<HobbyVO> hobbyListData(int start);
 	public int hobbyTotalPage();
+	public List<HobbyVO> hobbyTop10Data();
 }

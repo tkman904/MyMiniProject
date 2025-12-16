@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class HobbyController {
-	private final HobbyService hServcie;
+	private final HobbyService hServcie;	
 	
 	@GetMapping("/hobby/list")
 	public String hobby_list(@RequestParam(name = "page", required = false) String page, Model model) {
