@@ -1,0 +1,24 @@
+package com.sist.web.dao;
+
+import java.util.*;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.sist.web.entity.*;
+import com.sist.web.vo.*;
+
+public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
+	public BoardEntity findByNo(int no);
+	
+	@Query(value = "SELECT no, name, subject, TO_CHAR(regdate, 'yyyy-mm-dd') AS dbday, hit, num "
+			+ "FROM (SELECT no, name, subject, regdate, hit, ROWNUM AS num "
+			+ "FROM (SELECT no, name, subject, regdate, hit "
+			+ "FROM board_1 ORDER BY no DESC)) "
+			+ "WHERE num BETWEEN :start AND :end", nativeQuery = true)
+	public List<BoardVO> boardListData(@Param("start") Integer start, @Param("end") Integer end);
+	
+	@Query(value = "SELECT NVL(MAX(no)+1, 1) FROM board_1", nativeQuery = true)
+	public int getMax();
+}
