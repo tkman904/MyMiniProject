@@ -11,7 +11,9 @@
     transition: all 0.3s ease;
     box-shadow: 0 2px 6px rgba(0,0,0,0.08);
     padding-top: 8px;
-    height: 230px !important;
+    height: 230px;
+    display: flex;
+    flex-direction: column; 
 }
 
 .thumbnail:hover {
@@ -36,6 +38,9 @@
     text-align: center;
     background-color: #fafafa;
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .thumbnail .caption p {
@@ -46,16 +51,21 @@
     overflow: hidden !important;
     text-overflow: ellipsis !important;
     text-align: center !important;
+    word-break: keep-all;
+	word-wrap: break-word;
+	overflow-wrap: break-word;
+	line-height: 1.4;
+	white-space: normal;
 }
 
 /* 링크 효과 제거 */
-.thumbnail a {
+/* .thumbnail a {
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
     height: 100%;
-}
+} */
 
 /* 페이지네이션 */
 .pagination {

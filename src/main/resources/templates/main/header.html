@@ -23,12 +23,82 @@
 							<li><a href="#">취미 예약</a></li>
 						</ul>
 					</li>
-					<li><a href="#" class="icon fa-chart-bar"><span>동영상 검색</span></a>
-					<li><a href="/board/list" class="icon fa-chart-bar"><span>커뮤니티</span></a>
-					<li><a href="#" class="icon fa-chart-bar"><span>회원가입</span></a>
+					<li><a href="#" class="icon fa-chart-bar"><span>음악</span></a>
+						<ul>
+							<li><a href="/music/list">음악 목록</a></li>
+							<li><a href="#">음악 검색</a></li>
+						</ul>
+					</li>
+					<li><a href="#" class="icon fa-chart-bar"><span>동영상 검색</span></a></li>
+					<li><a href="/board/list" class="icon fa-chart-bar"><span>커뮤니티</span></a></li>
+					<li><a href="#" class="icon fa-chart-bar"><span>회원가입</span></a></li>
 				</ul>
 			</nav>
+			<hr style="border: none;">
+			<div class="row aln-right" th:if="${session.id == null}">
+				ID: <input type="text" ref="id" class="input-sm" size="15" v-model="id">&nbsp;
+				PW: <input type="password" ref="pwd" class="input-sm" size="15" v-model="pwd">&nbsp;
+				<button class="btn-xs btn-primary" type="button" @click="login()">로그인</button>
+			</div>
+			<div class="row aln-right" th:if="${session.id != null}">
+				[[${session.name}]]님 로그인 되었습니다&nbsp;
+				<button class="btn-xs btn-primary" type="button" @click="logout()">로그아웃</button>
+			</div>
 		</div>
 	</section>
+	<script>
+		const logApp = Vue.createApp({
+			data() {
+				return {
+					id: '',
+					pwd: '',
+					vo: {}
+				}
+			},
+			methods: {
+				login() {
+					if(this.id === "") {
+						this.$refs.id.focus()
+						return
+					}
+					if(this.pwd === "") {
+						this.$refs.pwd.focus()
+						return
+					}
+					axios.get('http://localhost/member/login_vue/', {
+						params: {
+							id: this.id,
+							pwd: this.pwd
+						}
+					}).then(response=> {
+						console.log(response.data)
+						this.vo = response.data
+						if(response.data.msg === 'OK') {
+							location.href = "/"
+						} else if(response.data.msg === 'NOID') {
+							alert("아이디가 존재하지 않습니다")
+							this.id = "";
+							this.pwd = "";
+							this.$refs.id.focus()
+						} else if(response.data.msg === 'NOPWD') {
+							alert("비밀번호가 틀렸습니다")
+							this.pwd = "";
+							this.$refs.pwd.focus()
+						}
+					})
+				},
+				logout() {
+					axios.get('http://localhost/member/logout_vue/')
+					.then(response=> {
+						if(response.data === 'yes') {
+							location.href = "/"
+						}
+					})
+				}
+			}
+		})
+		logApp.config.compilerOptions.delimiters=['((','))']
+    	logApp.mount("#header")
+	</script>
 </body>
 </html>

@@ -19,11 +19,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FooterAOP {
 	private final HobbyService hService;
+	private final MusicService mService;
 	
 	@After("execution(* com.sist.web.controller.*Controller.*(..))")
 	public void after() {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		List<HobbyVO> hList = hService.hobbyTop10Data();
+		List<MusicVO> mList = mService.musicTop10Data();
 		request.setAttribute("hList", hList);
+		request.setAttribute("mList", mList);
 	}
 }
